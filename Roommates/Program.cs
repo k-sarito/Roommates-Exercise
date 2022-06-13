@@ -159,6 +159,38 @@ namespace Roommates
                         Console.WriteLine("Successfully assigned chore. Press any key to continue");
                         Console.ReadKey();
                         break;
+                    case ("Update a chore"):
+                        List<Chore> choreOptions = choreRepo.GetAll();
+                        foreach (Chore c in choreOptions)
+                        {
+                            Console.WriteLine($"{c.Id} - {c.Name}");
+                        }
+
+                        Console.Write("Which chore would you like to update? ");
+                        int selectedChoreId = int.Parse(Console.ReadLine());
+                        Chore selectedChore = choreOptions.FirstOrDefault(c => c.Id == selectedChoreId);
+
+                        Console.Write("New Name: ");
+                        selectedChore.Name = Console.ReadLine();
+
+                        choreRepo.UpdateChore(selectedChore);
+
+                        Console.WriteLine("Chore has been successfully updated");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
+                        break;
+                    case ("Delete a chore"):
+                        List<Chore> allChores = choreRepo.GetAll();
+                        foreach (Chore c in allChores)
+                        {
+                            Console.WriteLine($"{c.Id} {c.Name}");
+                        }
+                        Console.Write("Choose a chore to delete");
+                        int chosenChoreId = int.Parse(Console.ReadLine());
+                        choreRepo.DeleteChore(chosenChoreId);
+                        Console.Write("Chore deleted. Congrats, you slob: ");
+                        Console.ReadKey();
+                        break;
                     case ("Search for a roommate"):
                         Console.Write("Roommate Id: ");
                         int rmateId = int.Parse(Console.ReadLine());
@@ -192,6 +224,8 @@ namespace Roommates
                 "See unassigned chores",
                 "Add a chore",
                 "Assign a chore",
+                "Update a chore",
+                "Delete a chore",
                 "Search for a roommate",
                 "Exit"
             };
